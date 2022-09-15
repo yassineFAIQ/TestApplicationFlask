@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <div class="jumbotron text-center">
+    
+    
+    {% if session.logged_in == NULL %}
+      <h1>Welcome To FlaskApp</h1>
+      <p class="lead">Hello</p>
+      <a href="/login" class="btn btn-success btn-lg">Login</a>
+    {% endif %}
+
+    {% if session.logged_in != NULL %}
+      {%if session.is_admin %}
+      <h1>Hello {{session.name}} Welcome To FlaskApp</h1>
+      <a href="/upload_page" class="btn btn-primary btn-lg">Upload</a>
+      <a href="/view" class="btn btn-success btn-lg">View</a>
+      {% else %}
+      <h1>hello {{session.name}} Welcome To FlaskApp</h1>
+      <a href="/view" class="btn btn-success btn-lg">view</a>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

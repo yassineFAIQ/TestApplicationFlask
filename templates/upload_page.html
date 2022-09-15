@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <div class="jumbotron text-center">
+    
+    
+   
+
+    {% if session.logged_in != NULL %}
+      <h1>Choose a file</h1>
+      <form method="POST"  action="/upload_file" enctype="multipart/form-data">
+        <input type="file" name="fileUpload" class="btn btn-lg" id="fileUpload"  aria-describedby="inputGroupFileAddon01" accept=".xlsx, .csv" required>
+        <button type="submit" class="btn btn-lg btn-success" id="btnCT">Save</button>
+    </form>
+
+    {% endif %}
+  </div>
+{% endblock %}
