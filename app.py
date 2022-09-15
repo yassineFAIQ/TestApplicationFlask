@@ -58,15 +58,15 @@ def login():
     if request.method == 'POST':
         # Get Form Fields
         username = request.form['username']
-        password_candidate = request.form['password']
-        result = TestApplication.check_identity(username,password_candidate)
+        password_user = request.form['password']
+        result = TestApplication.check_identity(username,password_user)
 
        
 
         if result:
                 # Passed
                 print(username)
-                role = TestApplication.get_role(username,password_candidate) 
+                role = TestApplication.get_role(username,password_user) 
                 print(role)
                 session['logged_in'] = True
                 if role =='ADMIN':
