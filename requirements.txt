@@ -62,3 +62,4 @@ urllib3==1.26.11
 Werkzeug==2.1.2
 zeep==4.1.0
 zipp==3.8.1
+sympy==1.6.1

@@ -3,7 +3,6 @@ from urllib import response
 
 from flask import Flask, jsonify, request,render_template, flash, redirect, url_for,logging,session
 from flask_cors import CORS
-from sympy import arg
 from configuration import db
 from config import config_by_name
 from flask_restx import Api, Namespace, Resource, fields, reqparse
@@ -35,7 +34,8 @@ parser.add_argument(
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    message = session['message']
+    return render_template('home.html',message = message)
 
 @app.route('/')
 def home_():
@@ -65,17 +65,16 @@ def login():
 
         if result:
                 # Passed
-                print(username)
                 role = TestApplication.get_role(username,password_user) 
-                print(role)
                 session['logged_in'] = True
+
                 if role =='ADMIN':
                     session['is_admin'] = True
                
                 else:
                     session['is_admin'] = False
                 
-                
+                session['message'] = ''
                 session['username'] = username
                 session['name'] = username.split('@')[0]
                 flash('You are now logged in', 'success')
@@ -116,6 +115,7 @@ class Upload_File(Resource):
         if request.method == "POST":
             uploaded_file = request.files['fileUpload']
             result = TestApplication.upload_file(uploaded_file)
+            session['message'] = result
             return redirect(url_for('home'))
 
             

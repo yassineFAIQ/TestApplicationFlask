@@ -30,17 +30,24 @@ class TestApplication():
     @classmethod
     def upload_file(cls, file):
         file_name = file.filename.split('.')[0]
-        sheet = Excel.parse_to_pandas(file)
-        db.session.query(STUDENT).delete()
-        db.session.commit()
-        db.session.close_all()
-        sheet.to_sql(
-            'STUDENT',
-            db.engine,
-            if_exists="append",
-            index=False
-        )
-        return sheet
+        try:
+            sheet = Excel.parse_to_pandas(file)
+            sheet = sheet[['Name','Age','Level']]
+            db.session.query(STUDENT).delete()
+            db.session.commit()
+            db.session.close_all()
+            
+            sheet.to_sql(
+                'STUDENT',
+                db.engine,
+                if_exists="append",
+                index=False
+            )
+        except Exception:
+            message = 'File is not compatible !!'
+            return message
+        message = ''
+        return message
 
     
 
